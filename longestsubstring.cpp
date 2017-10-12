@@ -1,31 +1,81 @@
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
-        int iMaxval = 0;
-	//ÆðÊ¼Î»ÖÃ
-	for (int i = 0; i < s.size(); i++)
-	{
-		//µ±Ç°Î»ÖÃ
-		string sTmp;
-		sTmp = s[i];
-		int iTmpval = 1;
-		for (int j = i + 1; j < s.size(); j++)
+    string longestPalindrome(string s) {
+		string sLongstr;
+		for(int i = 0; i < s.size(); i++)
 		{
-			if(sTmp.find(s[j]) == std::string::npos)
+			sLongstr = s[0];
+			string sTmpstr;
+			//1.ABAåž‹
+			if(i > 0 && i < s.size() - 1)
 			{
-				sTmp += s[j];
+				int iOffset = 1;
+				if(s[i - 1] == s[i + 1])
+				{
+					iOffset++;
+					while(i - iOffset >= 0 && i + iOffset < s.size())
+					{
+						if(s[i - iOffset] != s[i + iOffset])
+							break;
+						iOffset++;
+					}
+					iOffset--;
+					sTmpstr = sLongstr.substr(i - iOffset, 2 * iOffset + 1);
+					if(sTmpstr.size() > sLongstr.size())
+					sLongstr = sTmpstr;
+				}
 			}
-			else
+			//2.ABBAåž‹
+			if(i < s.size() - 1)
 			{
-				break;
+				int iOffset = 0;
+				if(s[i] == s[i + 1])
+				{
+					iOffset++;
+					while(i - iOffset >= 0 && i + iOffset + 1 < s.size())
+					{
+						if(s[i - iOffset] != s[i + iOffset + 1])
+							break;
+						iOffset++;
+					}
+					iOffset--;
+					sTmpstr = sLongstr.substr(i - iOffset, 2 * iOffset);
+					if(sTmpstr.size() > sLongstr.size())
+					sLongstr = sTmpstr;
+				}
 			}
-			iTmpval = sTmp.size();
+			
 		}
-		if (iMaxval < iTmpval)
+		/*
+		string sLongstr;
+        for(int i = 0; i < s.size() - 1; i++)
 		{
-			iMaxval = iTmpval;
+			string sTmpstr;
+			int iOffset = 0;
+				if(s[i] == s[i + 1])
+				{
+					iOffset++;
+					while(i - iOffset >= 0 && i + iOffset < s.size())
+					{
+						if(s[i + iOffset + 1] != s[i - iOffset])
+							break;
+					}
+					sTmpstr = s.substr(s.begin() + i - iOffset + 1, s.begin() + i + iOffset);
+				}
+				else if(s[i - 1] == s[i + 1])
+				{
+					iOffset++;
+					while(i - iOffset >= 0 && i + iOffset < s.size())
+					{
+						if(s[i + iOffset + 1] != s[i - iOffset - 1])
+							break;
+					}
+					sTmpstr = s.substr(s.begin() + i - iOffset, s.begin() + i + iOffset);
+				}
+				if(sTmpstr.size() > sLongstr.size())
+					sLongstr = sTmpstr;
 		}
-	}
-	return iMaxval;
+		return sLongstr;
+		*/
     }
 };
