@@ -1,4 +1,6 @@
-int reverse(int x)
+class Solution {
+public:
+ int reverse(int x)
 {
 	long long y = 0;
 	while (x)
@@ -11,3 +13,4 @@ int reverse(int x)
 		return 0;
 	return y;
 }
+};
