@@ -1,0 +1,88 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution
+{
+        public:
+        void PP(ListNode* pp)
+        {
+            while(pp)
+            {
+                printf("%d ", pp->val);
+                pp = pp->next;
+            }
+            printf("\n");
+        }
+
+        bool isPalindrome(ListNode* head)
+        {
+                bool bRet = true;
+                ListNode* fast = NULL;
+                ListNode* slow = NULL;
+                if(NULL == head)
+                {
+                        return true;
+                }
+                slow = head->next;
+                if(NULL == slow)
+                {
+                    return true;
+                }
+
+                fast = head->next->next;
+                while(fast && fast->next)
+                {
+                    slow = slow->next;
+                    fast = fast->next->next;
+                }
+
+                ListNode* pRevList = getReverse(slow);
+               // PP(pRevList);
+                while(pRevList)
+                {
+                        if(pRevList->val != head->val)
+                        {
+                                bRet = false;
+                                break;
+                        }
+                        pRevList = pRevList->next;
+                        head = head->next;
+                }
+                
+                return bRet;
+        }
+
+        ListNode* getReverse(ListNode* data)
+        {
+                if(NULL ==  data)
+                {
+                        return NULL;
+                }
+    
+                ListNode* pHead = NULL;
+                while(data)
+                {
+                    ListNode* pCurNode = data;
+                    data = data->next;
+                    pCurNode->next = pHead;
+                    pHead = pCurNode;
+                }
+                return pHead;
+#if 0
+                ListNode* pNode = new ListNode(data->val);;
+                while(data->next)
+                {
+                        data = data->next;
+                        ListNode* pData = new ListNode(data->val);
+                        pData->next = pNode;
+                        pNode = pData;
+                }
+                return pNode;
+#endif
+        }
+};
